@@ -53,7 +53,7 @@ Follow these steps to set up the project locally from scratch.
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/shahidHasan-pp/Food-Calorie-Microsite/
 cd Food-Calorie-Microsite
 ```
 
