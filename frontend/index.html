@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CalorieSnap &mdash; AI Food Calorie Estimator</title>
+  <meta name="description" content="Upload a food photo and instantly get AI-powered calorie and macronutrient estimates. Free, instant, no registration required." />
+  <meta name="keywords" content="food calories, calorie counter, AI nutrition, food recognition, macronutrients" />
+  <meta property="og:title" content="CalorieSnap - AI Food Calorie Estimator" />
+  <meta property="og:description" content="Snap a photo of your meal and get instant calorie estimates powered by Google Gemini AI." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <span class="orb orb-1"></span>
+    <span class="orb orb-2"></span>
+    <span class="orb orb-3"></span>
+  </div>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" role="banner">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="14" cy="14" r="14" fill="url(#grad1)"/>
+            <path d="M8 14c0-3.314 2.686-6 6-6s6 2.686 6 6" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+            <circle cx="14" cy="15" r="3" fill="white"/>
+            <defs>
+              <linearGradient id="grad1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6EE7B7"/>
+                <stop offset="1" stop-color="#3B82F6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <span class="brand-name">CalorieSnap</span>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot" aria-hidden="true"></span>
+        <span>Powered by Gemini AI</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <main class="main-content" role="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="hero-title">
+        Know what you <span class="gradient-text">eat</span>
+      </h1>
+      <p class="hero-subtitle">
+        Upload a photo of your meal and get instant AI-powered calorie &amp; macronutrient estimates in seconds.
+      </p>
+    </section>
+
+    <!-- ===================== UPLOAD CARD ===================== -->
+    <section class="card upload-card" aria-labelledby="upload-section-title">
+      <h2 id="upload-section-title" class="sr-only">Upload Food Photo</h2>
+
+      <!-- Drop zone -->
+      <div
+        id="drop-zone"
+        class="drop-zone"
+        role="button"
+        tabindex="0"
+        aria-label="Upload food photo. Click or drag and drop an image here."
+        aria-describedby="upload-hint"
+      >
+        <input
+          type="file"
+          id="file-input"
+          accept="image/jpeg,image/png,image/webp"
+          aria-label="Choose food image file"
+          hidden
+        />
+        <div class="drop-zone-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="24" fill="url(#iconGrad)"/>
+            <path d="M24 16v12M18 22l6-6 6 6" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 32h20" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="iconGrad" x1="0" y1="0" x2="48" y2="48" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#6EE7B7"/>
+                <stop offset="1" stop-color="#3B82F6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <p class="drop-zone-title">Drop your food photo here</p>
+        <p class="drop-zone-subtitle" id="upload-hint">JPG, PNG or WEBP &bull; Max 10MB</p>
+
+        <div class="upload-buttons">
+          <button id="btn-file" class="btn btn-secondary" type="button" aria-controls="file-input">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Browse Files
+          </button>
+          <button id="btn-camera" class="btn btn-secondary" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            Use Camera
+          </button>
+        </div>
+      </div>
+
+      <!-- Camera capture input (hidden) -->
+      <input
+        type="file"
+        id="camera-input"
+        accept="image/*"
+        capture="environment"
+        aria-label="Capture food photo using camera"
+        hidden
+      />
+
+      <!-- Preview section (hidden until image selected) -->
+      <div id="preview-section" class="preview-section hidden" aria-live="polite">
+        <div class="preview-header">
+          <span class="preview-label">Selected photo</span>
+          <button id="btn-clear" class="btn-icon" type="button" aria-label="Remove selected photo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="preview-image-wrapper">
+          <img id="preview-img" src="" alt="Selected food preview" class="preview-img" />
+        </div>
+        <div class="file-meta" id="file-meta" aria-live="off"></div>
+
+        <button id="btn-analyze" class="btn btn-primary" type="button" aria-label="Analyze food photo for calories">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          Analyze Food
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== LOADING ===================== -->
+    <div id="loading-section" class="loading-section hidden" role="status" aria-live="polite" aria-label="Analyzing your food photo">
+      <div class="loading-card card">
+        <div class="spinner" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <p class="loading-title">Analyzing your meal&hellip;</p>
+        <p class="loading-subtitle">Our AI is identifying the food and estimating nutrition values.</p>
+        <div class="loading-steps" aria-hidden="true">
+          <div class="step active" id="step-1">
+            <span class="step-dot"></span>
+            <span class="step-label">Uploading image</span>
+          </div>
+          <div class="step" id="step-2">
+            <span class="step-dot"></span>
+            <span class="step-label">Recognizing food</span>
+          </div>
+          <div class="step" id="step-3">
+            <span class="step-dot"></span>
+            <span class="step-label">Calculating nutrition</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== RESULTS ===================== -->
+    <section id="results-section" class="results-section hidden" aria-live="polite" aria-labelledby="results-title">
+      <div class="card results-card">
+        <div class="results-header">
+          <div class="results-food-info">
+            <div class="results-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <p class="results-label">Identified Food</p>
+              <h2 id="results-title" class="results-food-name" aria-label="Food identified"></h2>
+            </div>
+          </div>
+          <div class="confidence-badge" id="confidence-badge" aria-label="AI confidence level"></div>
+        </div>
+
+        <!-- Calories hero -->
+        <div class="calories-hero" aria-label="Total calories">
+          <span class="calories-value" id="result-calories"></span>
+          <span class="calories-unit">kcal</span>
+          <span class="calories-label">estimated</span>
+        </div>
+
+        <!-- Macro chart bar -->
+        <div class="macro-bar-wrapper" aria-label="Macronutrient distribution">
+          <div class="macro-bar" id="macro-bar" role="img" aria-label="Macronutrient bar chart"></div>
+          <div class="macro-bar-legend">
+            <span><span class="legend-dot protein-dot"></span>Protein</span>
+            <span><span class="legend-dot carbs-dot"></span>Carbs</span>
+            <span><span class="legend-dot fat-dot"></span>Fat</span>
+            <span><span class="legend-dot sugar-dot"></span>Sugar</span>
+          </div>
+        </div>
+
+        <!-- Macro cards -->
+        <div class="macros-grid" role="list" aria-label="Macronutrient breakdown">
+          <div class="macro-card protein-card" role="listitem">
+            <div class="macro-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <span class="macro-value" id="result-protein"></span>
+            <span class="macro-unit">g</span>
+            <span class="macro-name">Protein</span>
+          </div>
+          <div class="macro-card carbs-card" role="listitem">
+            <div class="macro-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <span class="macro-value" id="result-carbs"></span>
+            <span class="macro-unit">g</span>
+            <span class="macro-name">Carbs</span>
+          </div>
+          <div class="macro-card fat-card" role="listitem">
+            <div class="macro-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V12M12 12C12 7 7 3 7 3s5 1 5 5M12 12c0-5 5-9 5-9s-5 1-5 5"/></svg>
+            </div>
+            <span class="macro-value" id="result-fat"></span>
+            <span class="macro-unit">g</span>
+            <span class="macro-name">Fat</span>
+          </div>
+          <div class="macro-card sugar-card" role="listitem">
+            <div class="macro-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+            </div>
+            <span class="macro-value" id="result-sugar"></span>
+            <span class="macro-unit">g</span>
+            <span class="macro-name">Sugar</span>
+          </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer" role="note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Estimates may vary &plusmn;20% depending on preparation and portion size.
+        </div>
+
+        <button id="btn-analyze-another" class="btn btn-outline" type="button">
+          Analyze Another Photo
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== ERROR ===================== -->
+    <div id="error-section" class="error-section hidden" role="alert" aria-live="assertive">
+      <div class="card error-card">
+        <div class="error-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <h3 class="error-title" id="error-title"></h3>
+        <p class="error-message" id="error-message"></p>
+        <button id="btn-try-again" class="btn btn-outline" type="button">Try Again</button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer" role="contentinfo">
+    <p>
+      &copy; 2026 CalorieSnap &bull;
+      <span>AI estimates only &mdash; not medical advice</span>
+    </p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+    "venvPath": "c:/TheCanvas/lab/mini-projects/Food-Calorie-Microsite/backend",
+    "venv": "venv",
+    "extraPaths": [
+        "c:/TheCanvas/lab/mini-projects/Food-Calorie-Microsite/backend",
+        "c:/TheCanvas/lab/mini-projects/Food-Calorie-Microsite/backend/venv/Lib/site-packages"
+    ]
+}
